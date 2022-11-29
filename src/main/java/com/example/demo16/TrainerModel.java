@@ -48,19 +48,18 @@ public class TrainerModel {
         return null;
     }
 
-    // part 1: add method
+
     public void moveBlobs(List<Blob> selection, double dX, double dY) {
         selection.forEach(b -> b.move(dX,dY));
         notifySubscribers();
     }
 
-    // part 2: add method (note there are two versions that do the same thing
-    // the first uses streams, the second is more traditional)
+
     public List<Blob> areaHit(double x, double y, double cursorRadius) {
         return blobs.stream().filter(b -> b.contains(x,y,cursorRadius)).collect(Collectors.toList());
     }
 
-    // part 2: alternate method that does not use streams
+
     public List<Blob> areaHit2(double x, double y, double cursorRadius) {
         List<Blob> hitList = new ArrayList<>();
         blobs.forEach(b -> {

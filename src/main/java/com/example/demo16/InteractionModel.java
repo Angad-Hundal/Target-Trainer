@@ -5,15 +5,15 @@ import java.util.List;
 
 public class InteractionModel {
     List<IModelListener> subscribers;
-    Blob selected; // now superseded by variable 'selection'
-    List<Blob> selection; // part 1
-    double areaRadius; // part 2
-    double cursorX, cursorY; // part 2
+//    Blob selected; // selection used instead to cover multiple selections
+    List<Blob> selection;
+    double areaRadius;
+    double cursorX, cursorY;
 
     public InteractionModel() {
         subscribers = new ArrayList<>();
-        selection = new ArrayList<>(); // part 1
-        areaRadius = 75; // part 2
+        selection = new ArrayList<>();
+        areaRadius = 75;
     }
 
     public void addSubscriber(IModelListener sub) {
@@ -30,12 +30,11 @@ public class InteractionModel {
         notifySubscribers();
     }
 
-    // part 1: add method
-    public void select(Blob b) {
-        //selected = b; // remove for part 1
-        addSubtract(b); // part 1
-        notifySubscribers();
-    }
+//    // part 1: add method
+//    public void select(Blob b) {
+//        addSubtract(b);
+//        notifySubscribers();
+//    }
 
     // part 1: add method
     private void addSubtract(Blob b) {
@@ -46,12 +45,12 @@ public class InteractionModel {
         }
     }
 
-    // part 1: this method now superseded by select()
-    // we can remove this method
-    public void setSelected(Blob b) {
-        selected = b;
-        notifySubscribers();
-    }
+//    // part 1: this method now superseded by select()
+//    // we can remove this method
+//    public void setSelected(Blob b) {
+//        selected = b;
+//        notifySubscribers();
+//    }
 
     // part 1: add method
     public void clearSelection() {
@@ -59,12 +58,12 @@ public class InteractionModel {
         notifySubscribers();
     }
 
-    // part 1: this method is now superseded by clearSelection
-    // (we can remove this method)
-    public void unselect() {
-        selected = null;
-        notifySubscribers();
-    }
+//    // part 1: this method is now superseded by clearSelection
+//    // (we can remove this method)
+//    public void unselect() {
+//        selected = null;
+//        notifySubscribers();
+//    }
 
     // part 1: add method
     public boolean isSelected(Blob b) {
@@ -76,12 +75,12 @@ public class InteractionModel {
         return selection;
     }
 
-    // part 1: this method is now superseded by getSelection
-    // and by isSelected
-    // (we can remove this method)
-    public Blob getSelected() {
-        return selected;
-    }
+//    // part 1: this method is now superseded by getSelection
+//    // and by isSelected
+//    // (we can remove this method)
+//    public Blob getSelected() {
+//        return selected;
+//    }
 
     // part 2: add method
     public double getCursorRadius() {
