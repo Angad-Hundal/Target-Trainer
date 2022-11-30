@@ -13,7 +13,8 @@ public class TrainerModel {
     }
 
     public void addBlob(double x, double y) {
-        blobs.add(new Blob(x,y));
+
+        blobs.add(new Blob(x,y, blobs.size()));
         notifySubscribers();
     }
 

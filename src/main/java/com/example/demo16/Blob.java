@@ -3,11 +3,13 @@ package com.example.demo16;
 public class Blob {
     double x,y;
     double r;
+    int number=0;
 
-    public Blob(double nx, double ny) {
+    public Blob(double nx, double ny, int Number) {
         x = nx;
         y = ny;
         r = 50;
+        number = Number;
     }
 
     public void move(double dx, double dy) {

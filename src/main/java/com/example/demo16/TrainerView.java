@@ -26,7 +26,6 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
 
         model.getBlobs().forEach(b -> {
 
-
             if (iModel.isSelected(b)) {
                 gc.setFill(Color.PURPLE);
 
@@ -35,6 +34,13 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
                 gc.setFill(Color.STEELBLUE);
             }
             gc.fillOval(b.x - b.r, b.y - b.r, b.r * 2, b.r * 2);
+
+
+            // write the blob number
+            gc.setStroke(Color.BLACK);
+            int blob_number = model.getBlobs().indexOf(b) + 1 ;
+            String a = String.valueOf(Integer.valueOf(blob_number));
+            gc.strokeText(a, b.x, b.y);
         });
 
         gc.setStroke(Color.GRAY);

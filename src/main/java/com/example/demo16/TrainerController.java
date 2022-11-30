@@ -40,14 +40,23 @@ public class TrainerController {
 
 
             case READY -> {
+
+                // blobs coming under the area
                 List<Blob> hitList = model.areaHit(event.getX(), event.getY(), iModel.getCursorRadius());
 
                 if (hitList.size() > 0) {
 
+
                     if (event.isControlDown()) {
                         iModel.select(hitList);
+                        System.out.println("Inside if");
                     }
+
+
                     else {
+
+                        System.out.println(key_pressed);
+                        System.out.println("Inside else");
                         if (!iModel.allSelected(hitList)) {
                             iModel.clearSelection();
                             iModel.select(hitList);
@@ -58,12 +67,14 @@ public class TrainerController {
                     currentState = State.DRAGGING;
                 }
                 // else MAKE a BLOB
+
+
+
                 else {
-
-
 
                     if (key_pressed.equals("Shift")){
                         currentState = State.PREPARE_CREATE;
+                        System.out.println("MAKE A BLOB");
                     }
 
                     else{
@@ -161,10 +172,19 @@ public class TrainerController {
             }
 
             case DELETE -> {
-                System.out.println("Delete pressed");
+                key_pressed = "Delete";
+
+                if (iModel.selection.size()>0){
+
+                    iModel.selection.forEach(b -> {
+                        // for each of the selected blob
+                        model.getBlobs().remove(b);
+                        // remove them from blobs
+                    });
+                    iModel.selection.clear();
+                }
             }
         }
-
     }
 
     public void handleKeyReleased(KeyEvent keyEvent){
