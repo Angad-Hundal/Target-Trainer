@@ -1,5 +1,6 @@
 package com.example.demo16;
 
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import java.lang.Math;
@@ -36,6 +37,8 @@ public class TrainerController {
     }
 
     public void handlePressed(MouseEvent event) {
+
+        iModel.released = false;
         switch (currentState) {
 
 
@@ -49,14 +52,10 @@ public class TrainerController {
 
                     if (event.isControlDown()) {
                         iModel.select(hitList);
-                        System.out.println("Inside if");
                     }
 
 
                     else {
-
-                        System.out.println(key_pressed);
-                        System.out.println("Inside else");
                         if (!iModel.allSelected(hitList)) {
                             iModel.clearSelection();
                             iModel.select(hitList);
@@ -74,19 +73,30 @@ public class TrainerController {
 
                     if (key_pressed.equals("Shift")){
                         currentState = State.PREPARE_CREATE;
-                        System.out.println("MAKE A BLOB");
                     }
 
                     else{
-                        System.out.println("Press shift to make a blob");
                         iModel.selection.clear();
                     }
                 }
             }
         }
+
+
+        iModel.points.clear();
+        iModel.released = false;
+        iModel.pathComplete = false;
+        iModel.points.add(new Point2D(event.getX(), event.getY()));
+
+
+        // RECTANGLE SELECTION
+        iModel.rx = event.getX();
+        iModel.ry = event.getY();
+
     }
 
     public void handleDragged(MouseEvent event) {
+        iModel.released = false;
 
         iModel.setCursor(event.getX(), event.getY());
         switch (currentState) {
@@ -128,7 +138,34 @@ public class TrainerController {
                 }
 
             }
+
+
         }
+
+        if (iModel.pathComplete && iModel.released){
+            iModel.points.clear();
+        }
+
+        if (!iModel.pathComplete){
+            //iModel.points.add(new Point2D(event.getX(), event.getY()));
+        }
+        iModel.points.add(new Point2D(event.getX(), event.getY()));
+
+
+        if (!iModel.released){
+            iModel.cur_rect_x = event.getX();
+            iModel.cur_rect_y = event.getY();
+        }
+
+        else{
+            //iModel.released = true;
+            iModel.rx = 0;
+            iModel.ry = 0;
+            iModel.cur_rect_x = 0;
+            iModel.cur_rect_y = 0;
+            iModel.points.clear();
+        }
+
     }
 
     public void handleReleased(MouseEvent event) {
@@ -145,6 +182,22 @@ public class TrainerController {
                 currentState = State.READY;
             }
         }
+
+        if ((iModel.points.get(0).getX() <= iModel.points.get(iModel.points.size()-1).getX() + 50.0 &&  iModel.points.get(0).getX() >= iModel.points.get(iModel.points.size()-1).getX() - 50.0) && (iModel.points.get(0).getY() <= iModel.points.get(iModel.points.size()-1).getY() + 50.0 && iModel.points.get(0).getY() >= iModel.points.get(iModel.points.size()-1).getY() - 50.0)){
+            iModel.pathComplete = true;
+        }
+        else {
+            iModel.pathComplete = false;
+            //iModel.released = true;
+            iModel.points.clear();
+        }
+
+        iModel.released = true;
+//        iModel.rx = 0;
+//        iModel.ry = 0;
+//        iModel.cur_rect_x = 0;
+//        iModel.cur_rect_y = 0;
+
     }
 
 
