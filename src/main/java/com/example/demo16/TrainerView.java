@@ -108,11 +108,9 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
 
                 initial.set(0, p.getX());
                 initial.set(1, p.getY());
-                //initialy = p.getY();
             });
 
             gc.closePath();
-            //gc.fill();
         }
 
 
@@ -120,17 +118,16 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
 
         // RECTANGLE DEALING
         if (!iModel.released){
-            System.out.println(iModel.rx);
-            System.out.println(iModel.ry);
-            System.out.println(iModel.cur_rect_x);
-            System.out.println(iModel.cur_rect_y);
 
-            gc.setStroke(Color.GREEN);
+            // green to red
+            gc.setStroke(Color.RED);
             gc.strokeLine(iModel.rx, iModel.ry, iModel.rx, iModel.cur_rect_y);
             gc.strokeLine(iModel.rx, iModel.cur_rect_y, iModel.cur_rect_x, iModel.cur_rect_y);
             gc.strokeLine(iModel.cur_rect_x, iModel.cur_rect_y, iModel.cur_rect_x, iModel.ry);
             gc.strokeLine(iModel.cur_rect_x, iModel.ry, iModel.rx, iModel.ry);
 
+
+            // green to red
             gc.setFill(Color.GREEN);
 
         }
@@ -176,21 +173,20 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
 
 
 
+
+
+
+
+
+
+
+
     private void setupOffscreen() {
 
         // offscreen bitmap for checking 'contains' on an oddly-shaped polygon
         Canvas checkCanvas = new Canvas(800, 800);
         GraphicsContext checkGC = checkCanvas.getGraphicsContext2D();
         checkGC.clearRect(0, 0, checkCanvas.getWidth(), checkCanvas.getHeight());
-
-
-        Canvas checkCanvas2 = new Canvas(800, 800);
-        GraphicsContext checkGC2 = checkCanvas.getGraphicsContext2D();
-        checkGC2.clearRect(0,0,checkCanvas2.getWidth(), checkCanvas2.getHeight());
-        checkGC2.setFill(Color.YELLOW);
-        checkGC2.fillRect(0,0,checkCanvas2.getWidth(), checkCanvas2.getHeight());
-
-
 
 
 
@@ -220,31 +216,35 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
                 iModel.getCursorRadius() * 2, iModel.getCursorRadius()*2);
 
 
-        if (!iModel.pathComplete && !iModel.released) {
-
-            System.out.println("path not completed and not released");
-            checkGC.setFill(Color.GRAY);
-            iModel.points.forEach(p -> checkGC.fillOval(p.getX()-3,p.getY()-3,6,6));
-        }
-
-        // path not completed but released
-        else if (!iModel.pathComplete && iModel.released){
-            //System.out.println("PATH NOT COMPLETED BUT MOUSE RELEASED");
 
 
-            System.out.println("path not completed but released");
-            checkGC.setFill(Color.GREEN);
 
 
-            checkGC.fillRect(iModel.rx, iModel.ry, iModel.cur_rect_x - iModel.rx, iModel.cur_rect_y - iModel.ry);
-
-        }
+//        if (!iModel.pathComplete && !iModel.released) {
+//
+//            System.out.println("path not completed and not released");
+//            checkGC.setFill(Color.GRAY);
+//            iModel.points.forEach(p -> checkGC.fillOval(p.getX()-3,p.getY()-3,6,6));
+//        }
+//
+//        // path not completed but released
+//        else if (!iModel.pathComplete && iModel.released){
+//            //System.out.println("PATH NOT COMPLETED BUT MOUSE RELEASED");
+//
+//
+//            System.out.println("path not completed but released");
+//            checkGC.setFill(Color.GREEN);
+//
+//
+//            checkGC.fillRect(iModel.rx, iModel.ry, iModel.cur_rect_x - iModel.rx, iModel.cur_rect_y - iModel.ry);
+//
+//        }
 
         // path completed and released
-        else if (iModel.pathComplete && iModel.released){
+        if (iModel.pathComplete && iModel.released){
 
 
-            System.out.println("path completed and released ");
+            //System.out.println("path completed and released ");
             checkGC.setFill(Color.RED);
             checkGC.beginPath();
 
@@ -275,38 +275,38 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
         }
 
 
-
         WritableImage buffer = checkCanvas.snapshot(null, null);
         reader = buffer.getPixelReader();
         ArrayList<Double> a = new ArrayList<>();
         a.add(0,0.0);
 
 
+
+//        if (iModel.pathComplete && iModel.released){
+//
+//            model.getBlobs().forEach(b -> {
+//
+//                a.set(0,reader.getColor((int) b.x, (int) b.y).getRed());
+//
+//                if (a.get(0) == 1.0){
+//                    System.out.println("RED SELECTED");
+//                    iModel.selection.add(b);
+//                }
+//            });
+//
+//
+//        }
         model.getBlobs().forEach(b -> {
 
             a.set(0,reader.getColor((int) b.x, (int) b.y).getRed());
-            //System.out.println("RED: " + a.get(0));
 
             if (a.get(0) == 1.0){
+                //System.out.println("RED SELECTED");
                 iModel.selection.add(b);
             }
         });
 
 
-        ArrayList<Double> c = new ArrayList<>();
-        c.add(0,0.0);
-
-        model.getBlobs().forEach(b -> {
-
-            c.set(0, reader.getColor((int) b.x, (int) b.y).getGreen());
-
-            System.out.println("GREEN :" + reader.getColor((int) b.x, (int) b.y).getGreen());
-
-            if (c.get(0) == 1.0){
-                System.out.println("INSIDE");
-                iModel.selection.add(b);
-            }
-        });
 
     }
 }

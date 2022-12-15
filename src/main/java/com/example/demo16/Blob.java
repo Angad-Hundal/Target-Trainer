@@ -3,6 +3,9 @@ package com.example.demo16;
 public class Blob {
     double x,y;
     double r;
+
+    double start_x, start_y;
+    double start_radius, end_radius;
     int number=0;
 
     public Blob(double nx, double ny, int Number) {
@@ -10,6 +13,7 @@ public class Blob {
         y = ny;
         r = 50;
         number = Number;
+        start_radius = 50;
     }
 
     public void move(double dx, double dy) {

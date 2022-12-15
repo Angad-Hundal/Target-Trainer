@@ -29,6 +29,11 @@ public class InteractionModel {
     double cur_rect_x, cur_rect_y;
 
 
+    // UNDO/REDO COMMANDS
+
+    Stack undo_stack, redo_stack;
+
+
 
     public InteractionModel() {
         subscribers = new ArrayList<>();
@@ -40,6 +45,9 @@ public class InteractionModel {
         //setupOffscreen();
         points = new ArrayList<>();
         pathComplete = false;
+        undo_stack = new Stack();
+        redo_stack = new Stack();
+
     }
 
 
@@ -105,5 +113,8 @@ public class InteractionModel {
     public double getCursorY() {
         return cursorY;
     }
+
+
 }
+// add to stack
 

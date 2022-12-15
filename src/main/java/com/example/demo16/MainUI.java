@@ -11,6 +11,9 @@ public class MainUI extends StackPane {
         TrainerView view = new TrainerView();
         InteractionModel iModel = new InteractionModel();
 
+        //model.imodel = iModel;
+        model.setInteractionModel(iModel);
+        model.imodel= iModel;
         controller.setModel(model);
         view.setModel(model);
         controller.setIModel(iModel);
