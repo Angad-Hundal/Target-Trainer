@@ -288,7 +288,7 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
 //
 //                a.set(0,reader.getColor((int) b.x, (int) b.y).getRed());
 //
-//                if (a.get(0) == 1.0){
+//                if (a.getClipboard(0) == 1.0){
 //                    System.out.println("RED SELECTED");
 //                    iModel.selection.add(b);
 //                }

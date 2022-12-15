@@ -108,13 +108,6 @@ public class TrainerModel {
     public void deleteBlob(Blob b){
         blobs.remove(b);
 
-//        imodel.selection.forEach(each_blob -> {
-//
-//            if (b.equals(each_blob)){
-//                int temp_index = imodel.selection.indexOf(b);
-//            }
-//        });
-
         imodel.selection.remove(b);
         notifySubscribers();
     }

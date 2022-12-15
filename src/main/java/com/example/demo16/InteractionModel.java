@@ -1,7 +1,6 @@
 package com.example.demo16;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.PixelReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +10,6 @@ public class InteractionModel {
     List<Blob> selection;
     double areaRadius;
     double cursorX, cursorY;
-
-
-    // LASSO SELECTION
 
     double mx, my; // store mouse coordinates
     //PixelReader reader; // for checking the offscreen bitmap's colours
@@ -30,8 +26,11 @@ public class InteractionModel {
 
 
     // UNDO/REDO COMMANDS
-
     Stack undo_stack, redo_stack;
+
+
+    // CUT COPY AND PASTE
+    TargetClipboard clipboard;
 
 
 
@@ -39,6 +38,7 @@ public class InteractionModel {
         subscribers = new ArrayList<>();
         selection = new ArrayList<>();
         areaRadius = 75;
+        clipboard = new TargetClipboard();
 
 
         // lasso
@@ -115,6 +115,17 @@ public class InteractionModel {
     }
 
 
-}
-// add to stack
 
+    // CUT COPY AND PASTE
+    public void copyToClipboard() {
+
+        clipboard.copyClipboard(selection);
+        notifySubscribers();
+    }
+
+    public List<Blob> getClipboard() {
+        return clipboard.getClipboard();
+    }
+
+
+}

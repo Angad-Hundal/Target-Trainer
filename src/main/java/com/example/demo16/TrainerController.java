@@ -362,6 +362,7 @@ public class TrainerController {
             }
 
 
+
             case SHIFT -> {
                 System.out.println("Shift pressed");
 
@@ -387,6 +388,45 @@ public class TrainerController {
                     iModel.selection.clear();
                 }
             }
+
+
+            // CUT COPY AND PASTE
+            case C -> {
+                if (keyEvent.isControlDown()) {
+                    System.out.println("Copy");
+                    iModel.copyToClipboard();
+                }
+            }
+            case V -> {
+                if (keyEvent.isControlDown()) {
+                    System.out.println("Paste");
+                    List<Blob> pasteSet = iModel.getClipboard();
+
+                    pasteSet.forEach(blob -> {
+
+                        model.addBlob(blob.x, blob.y);
+                        iModel.undo_stack.add_stack(new CreateCommand(model, blob.x, blob.y, blob.number, blob));
+                    });
+
+                    iModel.select(pasteSet);
+
+
+                }
+            }
+            case X -> {
+                if (keyEvent.isControlDown()) {
+                    System.out.println("Cut");
+                    iModel.copyToClipboard();
+
+                    iModel.selection.forEach(blob -> {
+                        model.deleteBlob(blob);
+                        iModel.undo_stack.add_stack(new DeleteCommand(model, blob.x, blob.y, blob.number, blob));
+                    });
+
+                    iModel.clearSelection();
+                }
+            }
+
         }
     }
 
