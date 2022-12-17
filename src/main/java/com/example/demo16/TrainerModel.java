@@ -9,6 +9,7 @@ public class TrainerModel {
 
     public InteractionModel imodel;
 
+
     public TrainerModel() {
         subscribers = new ArrayList<>();
         blobs = new ArrayList<>();

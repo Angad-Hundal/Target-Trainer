@@ -114,8 +114,6 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
         }
 
 
-
-
         // RECTANGLE DEALING
         if (!iModel.released){
 
@@ -161,23 +159,11 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
 
     public void setController(TrainerController controller) {
 
-
         myCanvas.setOnMousePressed(controller::handlePressed);
         myCanvas.setOnMouseDragged(controller::handleDragged);
         myCanvas.setOnMouseReleased(controller::handleReleased);
         myCanvas.setOnMouseMoved(controller::handleMoved);
-
-
     }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -217,28 +203,6 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
 
 
 
-
-
-
-//        if (!iModel.pathComplete && !iModel.released) {
-//
-//            System.out.println("path not completed and not released");
-//            checkGC.setFill(Color.GRAY);
-//            iModel.points.forEach(p -> checkGC.fillOval(p.getX()-3,p.getY()-3,6,6));
-//        }
-//
-//        // path not completed but released
-//        else if (!iModel.pathComplete && iModel.released){
-//            //System.out.println("PATH NOT COMPLETED BUT MOUSE RELEASED");
-//
-//
-//            System.out.println("path not completed but released");
-//            checkGC.setFill(Color.GREEN);
-//
-//
-//            checkGC.fillRect(iModel.rx, iModel.ry, iModel.cur_rect_x - iModel.rx, iModel.cur_rect_y - iModel.ry);
-//
-//        }
 
         // path completed and released
         if (iModel.pathComplete && iModel.released){
@@ -281,32 +245,14 @@ public class TrainerView extends StackPane implements TrainerModelListener, IMod
         a.add(0,0.0);
 
 
-
-//        if (iModel.pathComplete && iModel.released){
-//
-//            model.getBlobs().forEach(b -> {
-//
-//                a.set(0,reader.getColor((int) b.x, (int) b.y).getRed());
-//
-//                if (a.getClipboard(0) == 1.0){
-//                    System.out.println("RED SELECTED");
-//                    iModel.selection.add(b);
-//                }
-//            });
-//
-//
-//        }
         model.getBlobs().forEach(b -> {
 
             a.set(0,reader.getColor((int) b.x, (int) b.y).getRed());
 
             if (a.get(0) == 1.0){
-                //System.out.println("RED SELECTED");
                 iModel.selection.add(b);
             }
         });
-
-
 
     }
 }

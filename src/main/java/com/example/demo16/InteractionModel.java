@@ -33,6 +33,19 @@ public class InteractionModel {
     TargetClipboard clipboard;
 
 
+    // TARGETING TRAINER
+
+    enum AppMode { EDIT, TEST, REPORT}
+
+    AppMode current_view_state = AppMode.EDIT;
+
+    private List<AppModeListener> appModelSubscribers;
+
+    int currentBlob;
+
+    List<TrialRecord> trial_record;
+
+
 
     public InteractionModel() {
         subscribers = new ArrayList<>();
@@ -48,6 +61,11 @@ public class InteractionModel {
         undo_stack = new Stack();
         redo_stack = new Stack();
 
+
+        // TARGETING TRAINER
+        appModelSubscribers = new ArrayList<>();
+        trial_record = new ArrayList<>();
+
     }
 
 
@@ -55,8 +73,13 @@ public class InteractionModel {
         subscribers.add(sub);
     }
 
+    public void addAppSubscribers(AppModeListener sub){
+        appModelSubscribers.add(sub);
+    }
+
     private void notifySubscribers() {
         subscribers.forEach(s -> s.iModelChanged());
+        appModelSubscribers.forEach(s -> s.appModelChanged());
     }
 
     public void select(List<Blob> hitList) {

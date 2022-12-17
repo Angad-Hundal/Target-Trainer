@@ -13,10 +13,7 @@ public class TrainerController {
     double prevX, prevY;
     double dX, dY;
     String key_pressed=" ";
-
     boolean undone;
-
-
 
     enum State {READY, PREPARE_CREATE, DRAGGING}
 
@@ -174,7 +171,6 @@ public class TrainerController {
         }
 
         else{
-            //iModel.released = true;
             iModel.rx = 0;
             iModel.ry = 0;
             iModel.cur_rect_x = 0;
@@ -424,6 +420,27 @@ public class TrainerController {
                     });
 
                     iModel.clearSelection();
+                }
+            }
+
+
+
+            // TARGET TRAINER
+
+            case T -> {
+
+                if (keyEvent.isControlDown()){
+                    System.out.println("TARGET VIEW");
+                    iModel.current_view_state = InteractionModel.AppMode.TEST;
+                }
+            }
+
+
+            case E -> {
+
+                if (keyEvent.isControlDown()){
+                    System.out.println("EDITOR VIEW");
+                    iModel.current_view_state = InteractionModel.AppMode.EDIT;
                 }
             }
 
